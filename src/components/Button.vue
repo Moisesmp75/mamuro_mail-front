@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="onClick" >{{ textButton }}</button>
+  <button class="bg-violet-500 font-sans" v-on:click="onClick" >{{ textButton }}</button>
 </template>
 <script>
 export default {

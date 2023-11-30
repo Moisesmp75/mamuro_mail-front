@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-3xl font-bold underline">Mamuro Mail</h1>
+  <h1 class="inset-0 text-5xl font-medium bg-violet-900 text-white underline decoration-double">Mamuro Mail</h1>
   <Input v-model="this.query" />
   <Button textButton="Aceptar" :onClick="search_data" />
   <DashBoard :data="this.mails" />
