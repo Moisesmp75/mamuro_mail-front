@@ -20,12 +20,11 @@
                 <li v-for="(item, i) in mail._source.to" :key="i" class="whitespace-nowrap">{{ item }}</li>
               </ul>
             </td>
-            <td class="px-4 py-2" v-html="mail._source.content">
+            <td class="px-4 py-2" v-html="formatContent(mail._source.content)">
             </td>
           </tr>
         </tbody>
       </table>
-      <!-- {{ this.mails }} -->
     </div>
   </div>
 </template>
@@ -34,6 +33,10 @@ export default {
   props: {
     data: {
       type: Array,
+      required: true
+    },
+    query: {
+      type: String,
       required: true
     }
   },
@@ -48,14 +51,12 @@ export default {
   updated() {
     this.mails = this.data
   },
-  cleanEmail(email) {
-    return email.replace(/[\r\t\n]/g, '').trim();
-  },
   methods: {
     formatContent(content) {
       const paragraphs = content.split('\n\n'); // Dividir por párrafos
       const formattedContent = paragraphs.map(paragraph => `${paragraph}`).join('');
-      return formattedContent;
+      const highlightedContent = formattedContent.replace(this.query, `<span style="background-color: yellow; font-weight: bold;">${this.query}</span>`);
+      return highlightedContent
     }
   }
 

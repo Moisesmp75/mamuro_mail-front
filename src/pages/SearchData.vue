@@ -5,7 +5,7 @@
       <Input v-model="this.query" />
       <Button textButton="Aceptar" :onClick="search_data" />
     </div>
-    <DashBoard :data="this.mails" />
+    <DashBoard :data="this.mails" :query="this.query"/>
   </div>
 </template>
 <script>
@@ -16,7 +16,7 @@ import Input  from '../components/Input.vue'
 import Button from "../components/Button.vue"
 import DashBoard from '../components/DashBoard.vue';
 
-import data from '../../data.json'
+// import data from '../../data.json'
 
 export default {
     
@@ -34,21 +34,16 @@ export default {
     methods: {
       async search_data() {
         const request = { query: this.query, pages: this.pages }
-        const { resource } = data
+        const { resource } = await this.mailService.search_data(request)
         const { hits } = resource
         const { hits: mails } = hits
         this.setMails(mails)
       },
       setMails(newMails) {
-        console.log(this.mails)
         this.mails = [...newMails]
-        console.log(this.mails)
       },
       created() {
         this.mails = [""]
-      },
-      cleanEmail(email) {
-      return email.replace(/[\r\t\n]/g, '').trim();
       }
     }
 }
